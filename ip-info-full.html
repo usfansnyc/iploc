@@ -1,0 +1,76 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Your IP Info</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 80px 20px;
+      background-color: #f9f9f9;
+    }
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 40px;
+    }
+    .info-block {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: #333;
+      margin: 20px 0;
+    }
+    .label {
+      font-size: 1.2rem;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+  <h1>Your IP Information</h1>
+
+  <div class="label">IPv4 Address:</div>
+  <div class="info-block" id="ipv4">Loading...</div>
+
+  <div class="label">IPv6 Address:</div>
+  <div class="info-block" id="ipv6">Loading...</div>
+
+  <div class="label">Region:</div>
+  <div class="info-block" id="region">Loading...</div>
+
+  <div class="label">Country:</div>
+  <div class="info-block" id="country">Loading...</div>
+
+  <script>
+    fetch('https://api.ipify.org?format=json')
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById('ipv4').textContent = data.ip;
+      })
+      .catch(() => {
+        document.getElementById('ipv4').textContent = "Unable to fetch IPv4.";
+      });
+
+    fetch('https://api64.ipify.org?format=json')
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById('ipv6').textContent = data.ip;
+      })
+      .catch(() => {
+        document.getElementById('ipv6').textContent = "Unable to fetch IPv6.";
+      });
+
+    fetch('https://ipapi.co/json/')
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById('region').textContent = data.region;
+        document.getElementById('country').textContent = data.country_name;
+      })
+      .catch(() => {
+        document.getElementById('region').textContent = "Unable to fetch region.";
+        document.getElementById('country').textContent = "Unable to fetch country.";
+      });
+  </script>
+</body>
+</html>
